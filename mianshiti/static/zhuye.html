@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <form action="http://127.0.0.1:8000/" id="uploadForm" enctype="multipart/form-data" method="post">
+    　　<input type="file" name="doc" id="doc" value="" >
+        <input type="button" onclick="postData();" value="上传" name="" style="width:100px;height:30px;">
+    </form>
+    <div id="show_img">
+
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    function postData(){
+        var formData = new FormData();
+        formData.append("doc",$("#doc")[0].files[0]);
+        $.ajax({
+            url:'http://127.0.0.1:8000/zhuye/',
+            type:'post',
+            data: formData,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success:function(res){
+                console.log(res);
+                if(res.code==200){
+                    my_ele = ``
+                    for (var i=0;i<res.img.length;i++) {
+                        pic = res.img[i];
+                        my_ele += `<img src='http://127.0.0.1:8000${pic}'/><br/>`
+                    }
+
+                    $("#show_img").html(my_ele);
+                }else{
+                    alert('失败');
+                }
+            }
+        })
+    }
+</script>

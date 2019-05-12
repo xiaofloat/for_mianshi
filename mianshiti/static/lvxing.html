@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旅行</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <div id="area">
+
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+              url: 'http://127.0.0.1:8000/lvxing/',
+              dataType: "json",
+              success: function (res) {
+                  my_ele = ``
+                  for (var i=0;i<res.length;i++) {
+                      aid = res[i].id;
+                      province = res[i].province;
+                      is_go = res[i].is_go;
+                      go_time = res[i].go_time;
+                      detail = res[i].detail;
+                      my_ele += `<div id="${aid}" class="show">
+                            城市:${province}
+                            <div style="display: None" is_go="${is_go}">
+                            go_time:${go_time}
+                            detail:${detail}
+                            </div>
+                        </div>`
+                  }
+                  $('#area').html(my_ele);
+              },
+            });
+        $('.show').mouseover(function () {
+            alert('hehe');
+        });
+    });
+
+</script>
